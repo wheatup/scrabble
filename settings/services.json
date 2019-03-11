@@ -1,0 +1,43 @@
+{
+  "services": [
+    {
+      "service_id": "241",
+      "service_name": "Matchvs",
+      "service_desc": "通过SDK接入快速实现联网功能、帧同步、国内外多节点、服务器独立部署、gameServer自定义游戏服务端逻辑。技术支持群QQ群：450335262",
+      "service_title": "专业成熟的移动游戏联网与服务端解决方案",
+      "service_icon": "https://account.cocos.com/client/14406719a07eb3d714d36e5edc6e06fa.png",
+      "service_guide_url": "http://doc.matchvs.com/QuickStart/QuickStart-CocosCreator",
+      "service_sample_url": "http://www.matchvs.com/serviceCourse",
+      "service_dev_url": "http://www.matchvs.com/cocosLogin",
+      "service_type": "2",
+      "service_type_zh": "仅支持公司游戏",
+      "support_platform": [
+        "Android",
+        "iOS",
+        "HTML5"
+      ],
+      "package_download_url": "http://download.cocos.com/CocosServices/plugins/service-matchvs/1.0.5_3.7.7.3.zip",
+      "package_version_desc": "2019-01-17<br> SDK版本：v3.7.7.3 <br> 1. 增加 断线补帧接口 getOffLineData <br> 2. 修改 login 接口和 init 接口参数，去掉重复参数。 <br> 3. 修复 sendEvent 有新用户刚刚进入房间的时候收不到第一条消息。 <br> 4. 修改 接口调用返回错误码，内部逻辑修改，功能不变。 <br> 5. 增加 组队匹配 接口<br> 6. 修复 组队开始匹配开始一次后不能再次匹配问题。 <br> 7. 其他内部代码的一些优化。<br> ",
+      "service_component_name": "service-matchvs",
+      "package_versions": [
+        "1.0.3_3.7.6.4",
+        "1.0.5_3.7.7.3"
+      ],
+      "build_platform": [
+        "web-mobile",
+        "web-desktop",
+        "fb-instant-games",
+        "wechatgame",
+        "wechatgame-subcontext",
+        "qqplay",
+        "android",
+        "android-instant",
+        "ios",
+        "mac",
+        "quickgame",
+        "qgame",
+        "huawei"
+      ]
+    }
+  ]
+}
