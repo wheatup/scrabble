@@ -2,6 +2,10 @@
 
 A multiplayer game made with Cocos Creator.
 
+### Preview
+
+![preview](/preview/preview.gif)
+
 ### Client
 
 1. Open root folder with Cocos Creator ~2.0.9.
