@@ -54,10 +54,10 @@ class Utils {
 		let worldAngleX = 0;
 		let worldAngleY = 0;
 		for (let parent = newParent; parent; parent = parent.parent) {
-			worldScaleX *= parent.scaleX;
-			worldScaleY *= parent.scaleY;
-			worldAngleX += parent[rotationAttr + 'X'];
-			worldAngleY += parent[rotationAttr + 'Y'];
+			worldScaleX /= parent.scaleX;
+			worldScaleY /= parent.scaleY;
+			worldAngleX -= parent[rotationAttr + 'X'];
+			worldAngleY -= parent[rotationAttr + 'Y'];
 		}
 
 		node.setParent(newParent);
