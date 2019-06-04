@@ -2,6 +2,10 @@
 
 A multiplayer game made with Cocos Creator.
 
+### Play Now
+
+> [https://wheatup.itch.io/scrabble](https://wheatup.itch.io/scrabble)
+
 ### Preview
 
 ![preview](/preview/preview.gif)
@@ -11,6 +15,7 @@ A multiplayer game made with Cocos Creator.
 1. Open root folder with Cocos Creator ~2.0.9.
 
 2. Start editing.
+3. 
 
 ### Server
 
