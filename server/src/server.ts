@@ -31,10 +31,12 @@ export default class Server {
 		this.config = await this.loadConfig();
 		console.log('Loading dictionary...');
 		this.words = await this.loadWords();
-		console.log('Creating http server...');
-		let app = express();
-		this.httpServer = http.createServer(app);
-		this.httpServer.listen(process.env.PORT || this.config.port);
+		if (process.env.PORT) {
+			console.log('Creating http server...');
+			let app = express();
+			this.httpServer = http.createServer(app);
+			this.httpServer.listen(process.env.PORT || this.config.port);
+		}
 		console.log('Setting up ws server...');
 		this.setupWebSocket();
 		this.bindEvents();
@@ -50,17 +52,18 @@ export default class Server {
 		match.join(player);
 	}
 
-	onValidate({player, data}){
+	onValidate({ player, data }) {
 		let match: Match = player.match;
-		if(match && match.running){
+		if (match && match.running) {
 			match.validate(player, data.data);
 		}
 	}
 
 	setupWebSocket() {
-		//@ts-ignore
-		this.wss = new WebSocketServer({server: this.httpServer}, () => {
-			console.log('\x1b[33m%s\x1b[0m', `Websocket server listening on port ${this.config.port}...`);
+		if (process.env.PORT) {		// Heroku environment
+			//@ts-ignore
+			this.wss = new WebSocketServer({ server: this.httpServer });
+			console.log('\x1b[33m%s\x1b[0m', `Websocket server listening on port ${process.env.PORT || this.config.port}...`);
 			this.wss.on('connection', ws => {
 				let player = Player.getPlayer(ws);
 				this.onConnection(player);
@@ -71,7 +74,23 @@ export default class Server {
 					this.onClose(player);
 				});
 			});
-		});
+		} else {					//Local
+			//@ts-ignore
+			this.wss = new WebSocketServer({ port: this.config.port }, () => {
+				console.log('\x1b[33m%s\x1b[0m', `Websocket server listening on port ${this.config.port}...`);
+				this.wss.on('connection', ws => {
+					let player = Player.getPlayer(ws);
+					this.onConnection(player);
+					ws.on('message', (message: string) => {
+						this.onMessage(player, message);
+					});
+					ws.on('close', (ws: WebSocket) => {
+						this.onClose(player);
+					});
+				});
+			});
+		}
+
 	}
 
 	loadConfig(): Promise<any> {
