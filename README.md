@@ -12,10 +12,9 @@ A multiplayer game made with Cocos Creator.
 
 ### Client
 
-1. Open root folder with Cocos Creator ~2.0.9.
+1. Open root folder with Cocos Creator ^2.0.9.
 
 2. Start editing.
-3. 
 
 ### Server
 
