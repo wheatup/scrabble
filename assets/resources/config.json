@@ -1,5 +1,5 @@
 {
-	"server": "ws://localhost:2333/",
+	"server": "ws://wheatup-scrabble.herokuapp.com:2333",
 	"frequency": {
 		"E": 20,
 		"A": 20,
