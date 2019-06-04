@@ -72,10 +72,12 @@ var Server = /** @class */ (function () {
                         return [4 /*yield*/, this.loadWords()];
                     case 2:
                         _b.words = _c.sent();
-                        console.log('Creating http server...');
-                        app = express();
-                        this.httpServer = http.createServer(app);
-                        this.httpServer.listen(process.env.PORT || this.config.port);
+                        if (process.env.PORT) {
+                            console.log('Creating http server...');
+                            app = express();
+                            this.httpServer = http.createServer(app);
+                            this.httpServer.listen(process.env.PORT || this.config.port);
+                        }
                         console.log('Setting up ws server...');
                         this.setupWebSocket();
                         this.bindEvents();
@@ -102,19 +104,37 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.setupWebSocket = function () {
         var _this = this;
-        //@ts-ignore
-        this.wss = new ws_1.Server({ server: this.httpServer });
-		console.log('\x1b[33m%s\x1b[0m', "Websocket server listening on port " + (process.env.PORT || this.config.port) + "...");
-		this.wss.on('connection', function (ws) {
-			var player = player_1["default"].getPlayer(ws);
-			_this.onConnection(player);
-			ws.on('message', function (message) {
-				_this.onMessage(player, message);
-			});
-			ws.on('close', function (ws) {
-				_this.onClose(player);
-			});
-		});
+        if (process.env.PORT) { // Heroku environment
+            //@ts-ignore
+            this.wss = new ws_1.Server({ server: this.httpServer });
+            console.log('\x1b[33m%s\x1b[0m', "Websocket server listening on port " + (process.env.PORT || this.config.port) + "...");
+            this.wss.on('connection', function (ws) {
+                var player = player_1["default"].getPlayer(ws);
+                _this.onConnection(player);
+                ws.on('message', function (message) {
+                    _this.onMessage(player, message);
+                });
+                ws.on('close', function (ws) {
+                    _this.onClose(player);
+                });
+            });
+        }
+        else { //Local
+            //@ts-ignore
+            this.wss = new ws_1.Server({ port: this.config.port }, function () {
+                console.log('\x1b[33m%s\x1b[0m', "Websocket server listening on port " + _this.config.port + "...");
+                _this.wss.on('connection', function (ws) {
+                    var player = player_1["default"].getPlayer(ws);
+                    _this.onConnection(player);
+                    ws.on('message', function (message) {
+                        _this.onMessage(player, message);
+                    });
+                    ws.on('close', function (ws) {
+                        _this.onClose(player);
+                    });
+                });
+            });
+        }
     };
     Server.prototype.loadConfig = function () {
         return new Promise(function (resolve, reject) {
