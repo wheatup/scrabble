@@ -26,3 +26,7 @@ A multiplayer game made with Cocos Creator.
 3. Type ```npm install concurrently nodemon typescript -g``` to install global modules.
 
 4. Type ```npm start``` to start development server.
+
+### Deploy
+
+1. Simply deploy `server` branch.
