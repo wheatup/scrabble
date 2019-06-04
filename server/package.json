@@ -10,6 +10,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"express": "^4.17.1",
 		"whevent": "^2.0.4",
 		"ws": "^6.2.0"
 	},

@@ -4,6 +4,8 @@
  */
 
 import WebSocket, { Server as WebSocketServer } from 'ws';
+import * as express from 'express';
+import * as http from 'http';
 import Player from './entities/player';
 import Signal from './enums/signal';
 import * as whevent from 'whevent';
@@ -15,6 +17,7 @@ declare const Buffer;
 export default class Server {
 	static $: Server = null;
 
+	httpServer: http.Server = null;
 	wss: WebSocketServer = null;
 	config: any = null;
 	words: string[] = [];
@@ -28,7 +31,11 @@ export default class Server {
 		this.config = await this.loadConfig();
 		console.log('Loading dictionary...');
 		this.words = await this.loadWords();
-		console.log('Setting up server...');
+		console.log('Creating http server...');
+		let app = express();
+		this.httpServer = http.createServer(app);
+		// this.httpServer.listen(this.config.port);
+		console.log('Setting up ws server...');
 		this.setupWebSocket();
 		this.bindEvents();
 	}
@@ -52,7 +59,7 @@ export default class Server {
 
 	setupWebSocket() {
 		//@ts-ignore
-		this.wss = new WebSocketServer({ port: this.config.port }, () => {
+		this.wss = new WebSocketServer({server: this.httpServer, port: this.config.port}, () => {
 			console.log('\x1b[33m%s\x1b[0m', `Websocket server listening on port ${this.config.port}...`);
 			this.wss.on('connection', ws => {
 				let player = Player.getPlayer(ws);
