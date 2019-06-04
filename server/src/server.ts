@@ -34,7 +34,7 @@ export default class Server {
 		console.log('Creating http server...');
 		let app = express();
 		this.httpServer = http.createServer(app);
-		// this.httpServer.listen(this.config.port);
+		this.httpServer.listen(process.env.PORT || this.config.port);
 		console.log('Setting up ws server...');
 		this.setupWebSocket();
 		this.bindEvents();
@@ -59,7 +59,7 @@ export default class Server {
 
 	setupWebSocket() {
 		//@ts-ignore
-		this.wss = new WebSocketServer({server: this.httpServer, port: this.config.port}, () => {
+		this.wss = new WebSocketServer({server: this.httpServer}, () => {
 			console.log('\x1b[33m%s\x1b[0m', `Websocket server listening on port ${this.config.port}...`);
 			this.wss.on('connection', ws => {
 				let player = Player.getPlayer(ws);
