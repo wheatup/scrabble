@@ -1,0 +1,20 @@
+{
+	"name": "scrabble",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.17.1",
+		"whevent": "^2.0.4",
+		"ws": "^6.2.0"
+	},
+	"devDependencies": {
+		"@types/node": "^11.10.5"
+	}
+}
